@@ -8,3 +8,5 @@ url: "" # the base hostname & protocol for your site
 gems: [jekyll-paginate,jekyll-seo-tag,jekyll-sitemap]
 paginate: 3
 google_analytics: 'UA-XXXXXXX-X'
+
+theme: jekyll-theme-cayman
