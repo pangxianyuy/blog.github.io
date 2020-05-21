@@ -9,9 +9,8 @@ header-img: "img/tag-bg.jpg"
 Credits: this page shamelessly borrowed a lot from:
 https://github.com/kitian616/jekyll-TeXt-theme
 -->
-
 <!-- Page Header -->
-{% include intro-header.html type='page' %}
+{% include intro-header.html type='page' short=true %}
 
 <!-- Main Content -->
 <div class="container">
@@ -32,10 +31,10 @@ https://github.com/kitian616/jekyll-TeXt-theme
 					title="{{ tag[0] }}" rel="{{ tag[1].size }}">
 					{{ tag[0] }}
 					<sup>{{tag[1].size}}</sup>
-				</a>
+				</a>__SEPERATOR__
 				{% endfor %}
 				{% endcapture %}
-        {{ tags | split:'</a>' | sort | join:'</a>' }}
+        {{ tags | split:'__SEPERATOR__' | sort }}
 			</div>
 
             <!-- Article List -->
@@ -80,6 +79,7 @@ https://github.com/kitian616/jekyll-TeXt-theme
 				    </a>
 					<hr>
 				</div>
+			{%- if forloop.last -%}</section>{%- endif -%}
 			{% endfor %}
 		</div>
 	</div>
