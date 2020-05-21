@@ -1,0 +1,183 @@
+---
+layout:     post
+title:      "使用RVM对Ruby进行多版本管理"
+subtitle:   "RVM是一个命令行工具，可以提供一个便捷的多版本Ruby环境的管理和切换。"
+date:       2018-02-12
+author:     "Malcolm Suen"
+header-img: "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog: true
+tags:
+    - RVM
+    - Ruby
+---
+
+## 前言
+
+Ruby是一种纯粹的面向对象编程语言，被称为**"程序员的最佳朋友"。**
+
+RubyGems（Gems）是一个用于对 Ruby组件进行打包的 Ruby 打包系统。 它提供一个分发 Ruby 程序和库的标准格式，还提供一个管理程序包安装的工具。RubyGems的功能类似于Linux下的apt-get。使用它可以方便的从远程服务器下载并安装Rails。
+
+前几日对gem进行更新的时候，发现有一个名为`did_you_mean`的gems更新报错，错误内容提示需要Ruby的版本为2.5.0以上。于是就萌生了使用RVM安装多个Ruby并实现控制切换Ruby版本的想法。
+
+以下的命令都是在当前用户权限下执行的，最好不要使用sudo。
+
+## 安装RVM
+
+[RVM](https://rvm.io/) 是一个命令行工具，可以提供一个便捷的多版本 Ruby 环境的管理和切换。
+
+如果你打算学习 Ruby / Rails, RVM 是必不可少的工具之一。
+
+```shell
+$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+$ curl -sSL https://get.rvm.io | bash -s stable
+# 如果上面的连接失败，可以尝试: 
+$ curl -L https://raw.githubusercontent.com/wayneeseguin/rvm/master/binscripts/rvm-installer | bash -s stable
+```
+
+期间可能会问你 sudo 管理员密码，以及自动通过 `Homebrew` 安装依赖包，等待一段时间后就可以成功安装好 RVM。
+
+相关的配置会写入.bashrc与.bash_profile中，也可以手动进行配置：
+
+```shell
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+```
+
+然后，载入 RVM 环境（新开终端就不用这么做了，会自动重新载入的）
+
+```shell
+$ source ~/.rvm/scripts/rvm
+```
+
+如果不能科学上网的话，可以修改 RVM 下载 Ruby 的源，到 Ruby China 的镜像，不然网速会很感人:
+
+```shell
+echo "ruby_url=https://cache.ruby-china.org/pub/ruby" > ~/.rvm/user/db
+```
+
+检查一下是否安装正确
+
+```shell
+$ rvm -v
+rvm 1.29.3 (latest) by Michal Papis, Piotr Kuczynski, Wayne E. Seguin [https://rvm.io]
+```
+
+## 使用RVM安装Ruby环境
+
+列出已知的 Ruby 版本
+
+```shell
+$ rvm list known
+```
+
+安装一个 Ruby 版本
+
+```shell
+$ rvm install 2.5.0
+```
+
+这里安装了最新的 2.5.0, `rvm list known` 列表里面的都可以拿来安装。
+
+切换 Ruby 版本
+
+```shell
+$ rvm use 2.5.0
+```
+
+如果想设置为默认版本，这样一来以后新打开的控制台默认的 Ruby 就是这个版本
+
+```shell
+$ rvm use 2.5.0 --default 
+```
+
+这时候使用`ruby -v`查看当前的Ruby的版本
+
+```shell
+ruby 2.5.0p0 (2017-12-25 revision 61468) [x86_64-darwin17]
+```
+
+查询已经安装的ruby
+
+```shell
+$ rvm list
+```
+
+卸载一个已安装版本
+
+```shell
+$ rvm remove 2.2.0
+```
+
+## gemset的使用（补充）
+
+RVM 不仅可以提供一个多 Ruby 版本共存的环境，还可以根据项目管理不同的 gemset.
+
+gemset 可以理解为是一个独立的虚拟 Gem 环境，每一个 gemset 都是相互独立的。
+
+比如你有两个项目，一个是 Rails 2.3 一个是 `rails3. gemset` 可以帮你便捷的建立两套 Gem 开发环境，并且方便的切换。
+
+gemset 是附加在 Ruby 语言版本下面的，例如你用了 1.9.2, 建立了一个叫 rails3 的 gemset,当切换到 1.8.7 的时候，rails3 这个 gemset 并不存在。
+
+建立 gemset
+
+```shell
+$ rvm use 1.8.7
+$ rvm gemset create rails23
+```
+
+然后可以设定已建立的 gemset 做为当前环境
+
+use 可以用来切换语言或者 gemset
+
+前提是他们已经被安装(或者建立)。并可以在 `list` 命令中看到。
+
+```shell
+$ rvm use 1.8.7
+$ rvm use 1.8.7@rails23
+```
+
+然后所有安装的 Gem 都是安装在这个 gemset 之下。
+
+列出当前 Ruby 的 gemset
+
+```shell
+$ rvm gemset list
+```
+
+清空 gemset 中的 Gem
+
+如果你想清空一个 gemset 的所有 Gem, 想重新安装所有 Gem，可以这样
+
+```shell
+$ rvm gemset empty 1.8.7@rails23
+```
+
+删除一个 gemset
+
+```shell
+$ rvm gemset delete rails2-3
+```
+
+项目自动加载 gemset
+
+RVM 还可以自动加载 gemset。 例如我们有一个 Rails 3.1.3 项目，需要 1.9.3 版本 Ruby，整个流程可以这样。
+
+```shell
+$ rvm install 1.9.3
+$ rvm use 1.9.3
+$ rvm gemset create rails313
+$ rvm use 1.9.3@rails313
+```
+
+下面进入到项目目录，建立一个 `.rvmrc` 文件。
+
+在这个文件里可以很简单的加一个命令：
+
+```shell
+$ rvm use 1.9.3@rails313
+```
+
+然后无论你当前 Ruby 设置是什么，cd 到这个项目的时候，RVM 会帮你加载 Ruby 1.9.3 和 rails313 gemset.

@@ -1,0 +1,88 @@
+---
+layout:     post
+title:      "淘宝RubyGems镜像源暴毙后的求生之路"
+subtitle:   "晚上更新gem的时候突然发现……"
+date:       2018-12-12
+author:     "Malcolm Suen"
+header-img: "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog: true
+tags:
+    - Ruby
+    - Gem
+---
+
+### 淘宝镜像的暴毙
+
+晚上更新gem的时候忽然发现报了错，错误原因前所未见……
+
+```markdown
+ERROR:  Certificate /C=CN/ST=ZheJiang/L=HangZhou/O=Alibaba (China)
+Technology Co., Ltd./CN=*.taobao.org expired at 2018-12-05T03:16:02Z
+```
+
+淘宝镜像竟然失效了？（虽然我从来都没用过淘宝的镜像）吓得我赶紧打开了`ruby.taobao.org`，果不其然：
+
+>RubyGems 镜像的管理工作以后将交由 [Ruby China](http://gems.ruby-china.org/) 负责，以便能有更多的社区爱好者参与进来，保持持续发展。
+>
+>本站将不在继续维护，本站的维护者已经或即将参与到 [Ruby China 镜像](http://gems.ruby-china.org/) 的维护工作中，目前已将安装请求重定向到 [Ruby China 镜像](http://gems.ruby-china.org/)，请大家注意更换本地的 Gem Source。
+
+我:![](https://ws1.sinaimg.cn/large/006MzNVDly1fy3a2rd27vj30ib0bzmy0.jpg)
+
+百度了一下发现原来是镜像的维护者很多年前就已经离职了……直到2018-12-05彻底失效我才知道。不过原来的维护人员已经把请求重新定向到了Ruby China，应该没什么问题了？结果：
+
+>因域名备案问题，`.org` 域名无法继续提供 RubyGems 镜像服务，我们提供 `.com` 代替 `.org` 的域名，其他一切不变！！
+>
+>详情访问
+>
+>[https://gems.ruby-china.com](https://gems.ruby-china.com/)
+
+我：
+
+![](https://ws1.sinaimg.cn/large/006MzNVDly1fy3a2rhptgj307g07fdft.jpg)
+
+### Ruby镜像源的修改设置
+
+查看当前镜像
+
+```shell
+$ gem source l
+或
+$ gem source
+```
+
+查询结果如下：
+
+```shell
+*** CURRENT SOURCES ***
+
+https://rubygems.org/
+https://ruby.taobao.org/
+```
+
+然后删除掉已经失效的镜像：
+
+```shell
+$ gem source -r https://ruby.taobao.org/
+#删除成功
+https://ruby.taobao.org/ removed from sources
+```
+
+删除成功后，再添加新的镜像：
+
+```shell
+$ gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+$ gem sources -l
+https://gems.ruby-china.com
+# 官方注明确保只有 gems.ruby-china.com
+```
+
+如果有条件还是使用原版镜像吧，万一国内的又不好使了呢……
+
+
+
+> 参考资料：
+>
+> [RubyGems - Ruby China](https://gems.ruby-china.com/)
+>
+> [修改Ruby的Gem镜像](https://blog.csdn.net/hsl0530hsl/article/details/80056289)

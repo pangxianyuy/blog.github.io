@@ -1,0 +1,162 @@
+---
+layout:     post
+title:      "Anaconda入门指南"
+subtitle:   "Anaconda是一个用于科学计算的Python发行版，支持 Linux, Mac, Windows系统，提供了包管理与环境管理的功能。"
+date:       2018-01-14
+author:     "Malcolm Suen"
+header-img: "img/post-bg-2015.jpg"
+header-mask:  0.3
+catalog: true
+tags:
+    - Anaconda
+    - Python
+---
+
+## 前言
+
+Python易用，但用好却不易，其中比较头疼的就是包管理和Python不同版本的问题，特别是当你使用Windows的时候。为了解决这些问题，有不少发行版的Python，比如WinPython、Anaconda等，这些发行版将python和许多常用的package打包，方便pythoners直接使用，此外，还有virtualenv、pyenv等工具管理虚拟环境。
+
+个人尝试了很多类似的发行版，最终选择了Anaconda，因为其强大而方便的包管理与环境管理的功能。该文主要介绍下Anaconda，对Anaconda的理解，并简要总结下相关的操作。
+
+## Anaconda概述
+
+[Anaconda](https://www.anaconda.com/what-is-anaconda/)是一个用于科学计算的Python发行版，支持 Linux, Mac, Windows系统，提供了包管理与环境管理的功能，它解决了官方 Python 的两大痛点。
+
+- 第一：提供了包管理功能，Windows 平台安装第三方包经常失败的场景得以解决，
+- 第二：提供环境管理的功能，功能类似 Virtualenv，解决了多版本Python并存、切换的问题。
+
+#### Conda与Anaconda：
+
+Conda 是一个开源的软件包管理系统和环境管理系统，用于安装多个版本的软件包及其依赖关系，并在它们之间轻松切换。包管理与pip的使用类似，环境管理则允许用户方便地安装不同版本的python并可以快速切换。
+
+Anaconda则的是一个开源的python发行版本，其包含了conda、python等180多个科学包及其依赖项。所以也称为python的一种发行版。其实还有Miniconda，顾名思义，它只包含最基本的内容——python与conda，以及相关的必须依赖项，对于空间要求严格的用户，Miniconda是一种选择。
+
+进入下文之前，说明一下conda的设计理念——**conda将几乎所有的工具、第三方包都当做package对待，甚至包括python和conda自身**！因此，conda打破了包管理与环境管理的约束，能非常方便地安装各种版本python、各种package并方便地切换。
+
+## Anaconda的安装
+
+[点此下载](https://www.anaconda.com/download/)Anaconda，Linux、Mac、Windows均支持。
+
+安装时，会发现有两个不同版本的Anaconda，分别对应Python 2.x和Python 3.x，两个版本其实除了这点区别外其他都一样。通过环境管理，我们可以很方便地切换运行时的Python版本。
+
+安装时，安装程序会把bin目录加入PATH（Linux/macOS默认写入`~/.bashrc`，Windows添加到系统变量PATH），如果你安装了zsh之类的shell，需要手动配置一下PATH。举个栗子：
+
+```shell
+# 将anaconda的bin目录加入PATH，根据版本不同，也可能是/anaconda2/bin
+# added by Anaconda3 5.0.1 installer
+$ export PATH="/anaconda3/bin:$PATH"
+# added by Anaconda3 5.0.1 installer
+$ export PATH="/Users/Belikovvv/anaconda3/bin:$PATH"
+
+# 更新zshrc以立即生效
+$ source ~/.zshrc
+```
+
+配置好PATH后，可以通过`conda --version`命令检查是否正确。
+
+## Conda的环境管理
+
+Conda的环境管理功能允许我们同时安装若干不同版本的Python，并能自由切换。假设我们需要安装Python 2.7，此时，我们需要做的操作如下：
+
+```shell
+# 创建一个名为python2x的环境，指定Python版本是2.7
+$ conda create --name python2x python=2.7
+
+# 使用activate激活该环境
+$ activate python2x # for Windows
+$ source activate python2x # for Linux & Mac
+
+# 使用deactivate退出该环境
+$ deactivate python2x # for Windows
+$ source deactivate python2x # for Linux & Mac
+
+#在新环境下使用pip命令安装第三方库，如lxml
+$ conda install -n python2x lxml
+
+#查看已有的环境
+$ conda info -e
+
+# 删除某个已有的环境（如果不添--all参数，而是指明某个库名，则是删除该库）
+$ conda remove --name python2x --all
+```
+
+由于我们现在安装的是Anaconda3，之后又新添加了Python 2.7环境，但是Python 3.6环境中安装了Anaconda自带的科学计算环境，Python 2.7中却没有，那么如何为新添加的环境也装上Anaconda的科学计算包呢，没必要一个一个来，更没有必要再去安装Anaconda2了，只需：
+
+```
+$ conda install -n python2x anaconda
+```
+
+## Conda的包管理
+
+Conda的包管理就比较好理解了，这部分功能与`pip`类似。
+
+例如，如果需要安装scipy：shell
+
+```shell
+# 安装scipy
+$ conda install scipy
+# conda会从从远程搜索scipy的相关信息和依赖项目，同时安装numpy和mkl（运算加速的库）
+
+# 查看已经安装的packages
+$ conda list
+# 最新版的conda是从site-packages文件夹中搜索已经安装的包，不依赖于pip，因此可以显示出通过各种方式安装的包
+```
+
+conda的一些常用操作如下：
+
+```shell
+# 查看当前环境下已安装的包
+$ conda list
+
+# 查看某个指定环境的已安装包
+$ conda list -n python2x
+
+# 查找package信息
+$ conda search numpy
+
+# 安装package
+$ conda install -n python2x numpy
+# 如果不用-n指定环境名称，则被安装在当前活跃环境
+# 也可以通过-c指定通过某个channel安装
+
+# 更新package
+$ conda update -n python2x numpy
+
+# 删除package
+$ conda remove -n python2x numpy
+```
+
+前面已经提到，conda将conda、python等都视为package，因此，完全可以使用conda来管理conda和python的版本，例如
+
+```shell
+# 更新conda，保持conda最新
+$ conda update conda
+
+# 更新anaconda
+$ conda update anaconda
+
+# 更新python
+$ conda update python
+# 假设当前环境是python 2.7, conda会将python升级为2.7.x系列的当前最新版本
+
+```
+
+## 设置国内镜像
+
+如果需要安装很多packages，你会发现conda下载的速度经常很慢，因为Anaconda.org的服务器在国外。所幸的是，清华TUNA镜像源有Anaconda仓库的镜像，我们将其加入conda的配置即可：
+
+```shell
+# 添加Anaconda的TUNA镜像
+$ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+# TUNA的help中镜像地址加有引号，需要去掉
+
+# 设置搜索时显示通道地址
+$ conda config --set show_channel_urls yes
+
+```
+
+执行完上述命令后，会生成`~/.condarc`(Linux/Mac)或`C:\Users\USER_NAME\.condarc`文件，记录着我们对conda的配置，直接手动创建、编辑该文件是相同的效果。
+
+P.S：翻墙也是一个好的选择……
+
+环境搭建好之后就可以开始愉快地玩数据分析了。
