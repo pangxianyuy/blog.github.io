@@ -1,28 +1,14 @@
 ---
 layout: default
 ---
-<section class="post">
-  <div>
-    <div class="post__header section-padding--double">
-      <div class="grid-small">
-        <h2>{{ page.title }}</h2>
-      </div>
-    </div>
+<article class="post">
 
-    {% if page.image %}
-      <div class="post__img">
-        <div>
-          <figure class="absolute-bg" style="background-image: url('{{ page.image }}');"></figure>
-        </div>
-      </div>
-    {% endif %}
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+  </header>
 
-    <div class="post__content section-padding">
-      <div class="grid">
-        <div id="markdown">
-          {{content}}
-        </div>
-      </div>
-    </div>
+  <div class="post-content">
+    {{ content }}
   </div>
-</section>
+
+</article>
