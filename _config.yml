@@ -102,5 +102,8 @@ page-mathjax: false
 
 # Friends
 friends: [
-Pangxianyu1
+{
+        title: "Pangxianyu1",
+        href: "https://pangxianyuy.github.io/"
+    }
 ]
