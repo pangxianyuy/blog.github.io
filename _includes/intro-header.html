@@ -13,8 +13,8 @@
 
     {% if page.header-mask %}
     header.intro-header .header-mask{
-        width: 10%;
-        height: 300%;
+        width: 100%;
+        height: 100%;
         position: absolute;
         background: rgba(0,0,0, {{ page.header-mask }});
     }
@@ -54,7 +54,7 @@
 {% if include.type == 'keynote' %}
 <style type="text/css">
     header.intro-header{
-        height: 500px;
+        height: 1000px;
         overflow: hidden;
     }
     header.intro-header .container{
