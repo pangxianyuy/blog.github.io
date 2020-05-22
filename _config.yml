@@ -101,10 +101,10 @@ page-mathjax: false
 
 
 # Friends
-#friends: [
+friends: [
     {
     #     title: "Su",
     #     href: "http://su.gallery/"
     # },{
-
-#]
+}
+]
