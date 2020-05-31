@@ -1,0 +1,306 @@
+---
+layout:     post
+title:      "知识图谱入门(上)"
+subtitle:   " 经验告诉我，像这种上下集的文章必定是没有下的..... "
+date:       2020-05-31 
+author:     "胖咸鱼y"
+header-img: "img/in-post/KG/KG-Head.jpg"
+catalog: true
+tags:
+    - 知识图谱
+    - GCN
+---
+
+> 我是将我所能见到的世界展示给大家的机器。
+>
+> ​                                                                                       --吉加·维尔托夫
+
+## 什么是知识图谱？
+
+人工智能的本质是解决生产力升级问题，产业界将人工智能在产业中的应用归结为感知智能、认知智能和行为智能三类。感知智能和行为智能是目前落地程度比较高的场景，比如基于图像的人脸辨识、活体检测、以图搜图、票据OCR、SIRI等等都是感知智能的场景，行为智能则是比如自动驾驶之类 。
+
+相比感知智能和行为智能，认知智能无论在产业界的热度，还是研究上的进展都要逊色一些。主要原因在于数据上。传统的结构化数据量无法支撑起认知智能的需要。当图像、NLP发展到一定阶段后，基于结合结构化数据、半结构化数据和非结构数据的认知智能的发展时机成熟，知识图谱被认为是实现认知智能的一个可能的方向。
+
+回到这一小节的主题上来，到底什么是知识图谱？
+
+> 知识图谱（Knowledge Graph）以结构化的形式描述客观世界中概念、实体及其之间的关系，将互联网的信息表达成更接近人类认知世界的形式，提供了一种更好地组织、管理和理解互联网海量信息的能力。知识图谱给互联网语义搜索带来了活力，同时也在智能问答中显示出强大威力，已经成为互联网知识驱动的智能应用的基础设施。
+>
+> 知识图谱技术是指知识图谱建立和应用的技术，是融合认知计算、知识表示与推理、信息检索与抽取、自然语言处理与语义 Web、数据挖掘与机器学习等交叉研究，属人工智能重要研究领域知识工程的研究范畴。知识图谱于 2012 年由谷歌提出并成功应用于搜索引擎，是建立大规模知识的一个杀手锏应用。
+>
+> 1994 年图灵奖获得者、知识工程的建立者费根鲍姆给出知识工程定义——将知识集成到计算机系统从而完成只有特定领域专家才能完成的复杂任务。在大数据时代，知识工程是从大数据中自动或半自动获取知识，建立基于知识的系统，以提供互联网智能知识服务。大数据对智能服务的需求，已经从单纯的搜集获取信息，转变为自动化的知识服务。我们需要利用知识工程为大数据添加语义/知识，使**数据产生智慧（Smart Data）**，完成从数据到信息到知识，最终到智能应用的转变过程，从而实现对大数据的洞察、提供用户关心问题的答案、为决策提供支持、改进用户体验等目标。
+>
+> 
+>
+> 引自：THU AI TR《人工智能之知识图谱》2019年第二期
+
+简而言之，知识图谱的目的是实现认知智能，达成强人工智能的目的，让计算机能够从数据中学会“推理“，即使数据产生智慧。
+
+## 知识图谱发展史
+
+1950年，艾伦图灵在他的《计算机器及智能》一文中，对2000年的计算机器的思考能力提出了大胆的假设：测试者与被测试者（一个人和一台机器）隔开的情况下，通过一些装置（如键盘）向被测试者随意提问。在经过多次测试后，如果机器让平均每个参与者做出超过30%的误判，那么这台机器就通过了测试，并被认为具有[人类智能](https://baike.baidu.com/item/人类智能/2287229)。这就是著名的图灵测试。同时代的优秀科学家分化为三大流派对这一顶峰发起了冲锋：信仰数理逻辑的符号主义、信仰人脑仿生的连接主义和信仰控制论的行为主义。
+
+符号主义中具有代表性的成果为启发式程序LT逻辑理论家，证明了38条数学定理，证明可以应用计算机研究人的思维多成，模拟人类智能活动。正是这些符号主义者，早在1956年首先采用**“人工智能”**这个术语。后来又发展了启发式算法->专家系统->知识工程理论与技术，并在20世纪80年代取得很大发展。符号主义曾长期一枝独秀，为人工智能的发展作出重要贡献，尤其是专家系统的成功开发与应用，为人工智能走向工程应用和实现理论联系实际具有特别重要的意义。知识图谱可以认为发源于符号主义。
+
+连接主义是目前最热的方向：神经网络。。它的代表性成果是1943年由生理学家麦卡洛克(McCulloch)和数理逻辑学家皮茨(Pitts)创立的脑模型，即MP模型，开创了用电子装置模仿人脑结构和功能的新途径。它从神经元开始进而研究神经网络模型和脑模型，开辟了人工智能的又一发展道路。20世纪60~70年代，连接主义，尤其是对以感知机(perceptron)为代表的脑模型的研究出现过热潮，由于受到当时的理论模型、生物原型和技术条件的限制，脑模型研究在20世纪70年代后期至80年代初期落入低潮。直到Hopfield教授在1982年和1984年发表两篇重要论文，提出用硬件模拟神经网络以后，连接主义才又重新抬头。1986年，鲁梅尔哈特(Rumelhart)等人提出多层网络中的反向传播算法(BP)算法。此后，连接主义势头大振，从模型到算法，从理论分析到工程实现，伟神经网络计算机走向市场打下基础。再到后来的深度学习之父Hiton、何凯明大佬等都是连接主义的著名学者。
+
+行为主义的工作主要体现在控制论中，包括：维纳(Wiener)和麦克洛克(McCulloch)等人提出的控制论和自组织系统以及钱学森等人提出的工程控制论和生物控制论，影响了许多领域。控制论把神经系统的工作原理与信息理论、控制理论、逻辑以及计算机联系起来。早期的研究工作重点是模拟人在控制过程中的智能行为和作用，如对自寻优、自适应、自镇定、自组织和自学习等控制论系统的研究，并进行“控制论动物”的研制。到20世纪60~70年代，上述这些控制论系统的研究取得一定进展，播下智能控制和智能机器人的种子，并在20世纪80年代诞生了智能控制和智能机器人系统。行为主义是20世纪末才以人工智能新学派的面孔出现的，引起许多人的兴趣。这一学派的代表作者首推布鲁克斯(Brooks)的六足行走机器人，它被看作是新一代的“控制论动物”，是一个基于感知-动作模式模拟昆虫行为的控制系统。
+
+知识图谱的发展史是与连接主义的发展史相关联的。主要分为三个时期（启蒙、成长、发展），五个阶段（前知识工程阶段、专家系统阶段、万维网 1.0 阶段，群体智能阶段以及知识图谱阶段）。
+
+2012年，google正式提出知识图谱名词，标志知识图谱快速发展阶段的到来。典型的例子是谷歌收购Freebase 后在 2012 年推出的知识图谱（Knowledge 、Gra ph），Facebook 的图谱搜索，Microsoft Satori 以及商业、金融、生命科学等领域特定的知识库。最具代表性大规模网络知识获取的工作包括DBpedia、Free base、KnowItAll、WikiTaxonomy和YAGO，以及BabelNet、ConceptNet、DeepDive、NELL、Probase、Wikidata、XLORE、Zhi shi.me、CNDBpedia 等。这些知识图谱遵循 RDF 数据模型，包含数以千万级或者亿级规模的实体，以及数十亿或百亿事实（即属性值和与其他实体的关系），并且这些实体被组织在成千上万的由语义体现的客观世界的概念结构中。
+
+
+
+## 再问：什么是知识图谱？
+
+知识图谱属于符号主义下的知识工程的新发展阶段，通过半结构化数据如XML、RDF（主流）、OWL等，从关系角度出发，通过大数据、图像、NLP、云计算等等多种技术，理解真实世界中的数据，实现存储、计算、查询和推理等功能，是走向认知智能和智慧数据的一条前进道路。
+
+从知识图谱构建角度，包括收集数据、知识抽取、知识融合、知识加工和知识应用等。从领域划分包括：括知识表示（knowledge representation）、知识获取（knowledge acquisition）、知识推理（knowledge reasoning）、知识集成（knowledge integration）和知识存储（knowledge storage）等。
+
+![查看源图像](C:\Users\杨健\Documents\GitHub\pangxianyuy.github.io\img\in-post\KG\v2-e5e2436e99d5eb32c37cb580bfea1752_1200x500.jpg)
+
+#### 1、收集数据
+
+收集数据根据业务的不同，具体的对象也不一样，从整体上包括:
+
+(1)结构化数据：现在大部分公司的用户信息、业务系统的表都是基于mysql、hive数据库的结构化数据，这些数据转化为关系型数据较简单（如果数据质量较好的化，实际上.....)。
+
+(2)半结构化数据：如公司公开发行的一些资料、股权结构、发展规划等等表格、文字类的数据，虽然结构化程度不高，但仍可以通过一些整理来使用。
+
+(3)非结构化数据：这部分需要通过数据挖掘和AI技术，像一些人脸库、指纹库、征信信息库等。
+
+#### 2、知识抽取
+
+业界主流的知识存储结构为RDF（实体->关系->实体，或实体->属性->属性值），因此知识抽取的核心要义是抽取实体、关系、属性和事件（补充）。针对这四个主体不同，抽取的方法有：
+
+（1）实体识别与连接
+
+**实体识别**是文本理解意义的基础，也就是识别文本中指定类别实体的过程，可以检测文本中的新实体，并将其加入到现有知识库中。
+
+**实体链接**是识别出文本中提及实体的词或者短语并与知识库中对应实体进行链接的过程，通过发现现有实体在文本中的不同出现，可以针对性的发现关于特定实体的新知识。
+
+主要方法包括：传统方法（HMM）、深度学习（CNN+LSTM）和文本挖掘（不熟悉）
+
+（2）实体关系
+
+实体关系定义为两个或多个实体间的某种联系，用于描述客观存在的事物之间的关联关系。实体关系学习就是自动从文本中检测和识别出实体之间具有的某种语义关系，也称为关系抽取。实体关系抽取分为预定义关系抽取和开放关系抽取。
+
+**预定义关系抽取**是指系统所抽取的关系是预先定义好的，如上下位关系、国家—首都关系等。
+
+**开放式关系抽取**不预先定义抽取的关系类别，由系统自动从文本中发现并抽取关系。
+
+基于规则或者机器学习。
+
+（3）事件
+
+**事件**是促使事物状态和关系改变的条件，是动态的、结构化的知识。目前已存在的知识资源（如谷歌知识图谱）所描述多是实体以及实体之间的关系，缺乏对事件知识的描述。事件知识学习，就是将非结构化文本中自然语言所表达的事件以结构化的形式呈现，对于知识表示、理解、计算和应用意义重大。
+
+主要包括事件的识别与抽取（机器学习、RNN）、事件的追踪与检测（追踪可太难了..）和事件库的建立（目前的研究是起步阶段）。
+
+#### 3、知识融合
+
+知识融合是指，从概念层和数据层两方面，通过知识库的对齐、关联、合并等方式，将多个知识图谱或信息源中的本体与 实体进行链接，形成一个更加统一、稠密的新型知识图谱。目的是消除数据来源广泛、质量参差不齐导致的多样性和异构性。
+
+常用的技术包括本体匹配（也称为本体映射）、实力匹配（也称为实体对齐、对象公指消解）以及知识融合等。
+
+#### 4、知识加工
+
+经过知识抽取和知识融合，实体和本体从信息源中被识别、抽取，并且消岐、统一，此时得到的关联数据是对客观事实的基本表达，但客观事实还不是知识图谱需要的知识体系，想要获得结构化的知识网络，还需要经过本体构建、知识推理和质量评估等知识加工过程。
+
+本体构建是知识图谱内实体连通的语义基础，以“点线面”组成的网状结构为表现形式，“点” 代表不同实体，“线”代表实体间的关系，“面”既是知识网络。本体可以通过人工总结专家经验进行手动编程，也可以由机器学习驱动进行自动构建，本体构建的模型深度和广度，决定了知识图谱的应用价值；
+
+知识推理是通过对已有实体间关系的计算，找到新关联，从而丰富新知识的过程，也是知识图谱更新的重要手段；
+
+质量评估是知识加工最后的“质检” 环节。
+
+(1)知识推理
+
+主要包含基于符号的知识推理和基于统计的知识推理。（一看就是之前说过的俩流派）
+
+基于符号的推理可以从一个已有的知识图谱推理出新的实体间关系，可用于建立新知识或者对知识图谱进行逻辑的冲突检测。
+
+基于统计的方法一般指关系机器学习方法，即通过统计规律从知识图谱中学习到新的实体间关系。
+
+知识推理在知识计算中具有重要作用，如知识分类、知识校验、知识链接预测与知识补全等。
+
+(2)知识存储和查询
+
+知识图谱以图（Graph）的方式来展现实体、事件及其之间的关系。主要有两种存储和查询方法。
+
+基于关系型数据的RDF存储：三列表、水平存储、垂直划分、属性表、全索引等等（不建议用关系型数据库）
+
+基于图模型的RDF存储、查询：
+
+> 子图匹配运算是图数据库中一个比较经典的问题：其问题定义在于给定一个数据图和一个查询图，找出数据上所有与查询图子图同态的位置。这个问题已被证明是一个 NP 难问题。
+>
+> 针对RDF 数据的 SPARQL 查询已经有一些基于图模型的查询处理系统，如 gStore、和TurboHOM++。它们都是利用 RDF 数据图的特点来构建索引。
+
+#### 5、知识应用
+
+主要有三个场景：语义搜索、智能问答和可视化决策。具体落地场景有：搜索引擎、推荐系统、广告系统、金融风控、公安、反欺诈团伙分析与挖掘等。(都是来钱快的地方....)有文章表面，基于图的推荐系统能比现在神经网络的推荐系统高30%，这些就是真真正正给公司带来的盈利。
+
+> 论文：Graph Convolutional Neural Networks for Web-Scale Recommender Systems
+>
+> 斯坦福和Pinterest公司合作提出了第一个工业级别（数十亿节点和数百亿边）基于GCN的推荐系统。
+
+
+
+（我在行文中埋了个彩蛋你发现了嘛∠( ᐛ 」∠)＿）
+
+![查看源图像](C:\Users\杨健\Documents\GitHub\pangxianyuy.github.io\img\in-post\KG\zdVM-fynmzun0511034.jpg)
+
+- [x] 彩蛋：如何确保计算机能够看得”懂“数据？
+
+#### 彩蛋：GCN和图表示学习
+
+知识表示将现实世界中的各类知识表达成计算机可存储和计算的结构。
+
+1）基于符号逻辑进行知识表示和推理，主要包括逻辑表示法（如一阶逻辑、描述逻辑）、产生式表示法和框架表示等。逻辑表示与人类的自然语言比较接近，是最早使用的一种知识表示方法；
+
+2）随着语义网概念的提出，万维网内容的知识表示技术逐渐兴起，包括基于标签的半结构置标语言XML、基于万维网资源语义元数据描述框架RDF和基于描述逻辑的本体描述语言OWL等，使得将机器理解和处理的语义信息表示在万维网上成为可能，当前在工业界大规模应用的多维基于 RDF 三元组的表示方法；
+
+3）随着自然语言处理领域词向量等嵌入（Embedding）技术手段的出现，采用连续向量方式来表示知识的研究（TransE 翻译模型、SME、、SLM、NTN、MLP ,以 及 NAM 神经网络模型等）正在逐渐取代与上述以符号逻辑为基础知识表示方法相融合，成为现阶段知识表示的研究热点。
+
+**同时，知识图谱嵌入也通常作为一种类型的先验知识辅助输入到很多深度神经网络模型中，用来约束和监督神经网络的训练过程**。
+
+（下图：连接主义再次暴打符号主义，欸，我为啥要用再次....）
+
+![image-20200531200909869](C:\Users\杨健\Documents\GitHub\pangxianyuy.github.io\img\in-post\Knowledge Graph\image-20200531200909869.png)
+
+(1)知识表示学习
+
+随着以深度学习为代表的表示学习的发展，面向知识图谱中实体和关系的表示学习也取得了重要的进展。知识表示学习将实体和关系表示为稠密的低维向量实现了对实体和关系的分布式表示，已经成为知识图谱语义链接预测和知识补全的重要方法。由于知识表示学习能够显著提升计算效率，有效缓解数据稀疏，实现异质信息融合并有助于实现知识融合，因此对知识库的构建、推理和应用具有重要意义，值得广受关注、深入研究。
+
+​	1）复杂关系建模
+
+​	a.Bordes 等人受到词向量空间对于词汇语义与句法关系存在有趣的平移不变现象的启发，提出了 TransE 模型，这一模型将知识库中的关系看作实体间的某种平      	移向量，在大规模知识图谱上效果明显。不过由于 TransE 模型过于简单，导致其在处理知识库的复杂关系时捉襟见肘。
+
+​	b.为突破 TransE 模型在处理 1-N、N-1、N-N 复杂关系时的局限性，研究学者相继提出了让一个实体在不同关系下拥有不同表示、认为不同关系拥有不同语义空   	间的TransH 模型和 TransR 模型，以及针对这两种模型中矩阵参数过多问题再次改进优化的 TransD 模型和 TranSparse 模型。
+
+​	c.此外，研究学者还提出了利用高斯分布来表示知识库中的实体和关系，可以在表示过程中考虑实体和关系本身语义上不确定性的 TransG 模型和 KG2E模型。	在相关数据集合上的实验表明，这些方法均较 TransE 有显著的性能提升，验证了这些方法的有效性。
+
+​	2）关系路径建模
+
+​	在知识图谱中，多步的关系路径也能够反映实体之间的语义关系。
+
+​	a.为了突破 TransE 等模型孤立学习每个三元组的局限性，Lin 等人提出考虑关系路径的表示学	习方法，以 TransE作为扩展基础，提出 Path-based -Trans  	 	E(PTransE）模型。
+
+​	b.PTransE 等研究的实验表明，考虑关系路径能够极大提升知识表示学习的区分性，提高在知识图谱补全等任务上的性能。
+
+> ![image-20200531202821193](C:\Users\杨健\Documents\GitHub\pangxianyuy.github.io\img\in-post\KG\image-20200531202821193.png)
+>
+> 引自：PinSage论文
+>
+> PinSage为使用GCN的推荐结果，恐怖程度仔细体会一下吧~
+
+完。
+
+（当然如果我还有计划填下半篇文章的化就没完....）
+
+（ε=ε=ε=┏(゜ロ゜;)┛ 逃）
+
+
+
+> **10篇推荐论文如下：**
+>
+> **1、标题：***[A Survey on Knowledge Graphs: Representation, Acquisition and Applications](https://www-beta1.aminer.cn/pub/5e3940c73a55ace46ed436d2/a-survey-on-knowledge-graphs-representation-acquisition-and-applications)*
+>
+> **出版物：**the Association for the Advance of Artificial Intelligence --AAAI2020
+>
+> **作者：**Shaoxiong Ji, Shirui Pan, Erik Cambria, Pekka Marttinen, Philip S. Yu
+>
+> **推荐理由**：本文详细介绍了知识图谱表示学习、知识获取与完成、时间知识图谱、知识感知应用等方面的技术和未来的研究方向。
+>
+>  
+>
+> **2、标题：***[Knowledge graph completion with adaptive sparse transfer matrix](https://www-beta1.aminer.cn/pub/573698636e3b12023e7294da/knowledge-graph-completion-with-adaptive-sparse-transfer-matrix)*
+>
+> **出版物：**the Association for the Advance of Artificial Intelligence --AAAI 2016
+>
+> **作者：**Guoliang Ji, Kang Liu, Shizhu He, Jun Zhao
+>
+> **推荐理由**：本文提出一种自适应稀疏转移矩阵来完善知识图谱，处理知识图谱的异质性和不平衡性等问题。
+>
+>  
+>
+> **3、标题：***[Dynamic Knowledge Graph Construction for Zero-shot Commonsense Question Answering](https://www-beta1.aminer.cn/pub/5dca89783a55ac77dcb01f1d/dynamic-knowledge-graph-construction-for-zero-shot-commonsense-question-answering)*
+>
+> **出版物：**Computing Research Repository --CoRR2019
+>
+> **作者：**Antoine Bosselut, Yejin Choi
+>
+> **推荐理由**：本文提出了一种利用生成神经常识模型，根据需要生成上下文相关知识的新方法，用于零样本常识问答任务，性能得到提升。
+>
+>  
+>
+> **4、标题：***[Collaborative knowledge base embedding for recommender systems](https://www-beta1.aminer.cn/pub/57aa28de0a3ac518da98974f/collaborative-knowledge-base-embedding-for-recommender-systems)*
+>
+> **出版物：**ACM SIGKDD Conference on Knowledge Discovery and Data Mining
+>
+>  --KDD 2016
+>
+> **作者：**Fuzheng Zhang, Nicholas Jing Yuan, Defu Lian, Xing Xie, Wei-Ying Ma
+>
+> **推荐理由**：本文研究了如何利用知识库中的异构信息来提高推荐系统的质量，首先利用知识库设计了三个组件，分别从结构内容、文本内容和可视内容中提取条目的语义表示；然后提出一种协同知识库嵌入（CKE）集成框架，共同学习协同过滤中的潜在表示以及知识库中项目的语义表示。本文方法明显提升了推荐系统中协同过滤的性能。
+>
+>  
+>
+> **5、标题：***[ProjE: Embedding projection for knowledge graph completion](https://www-beta1.aminer.cn/pub/5c89f48d4895d9cbc60707b5/proje-embedding-projection-for-knowledge-graph-completion)*
+>
+> **出版物：**the Association for the Advance of Artificial Intelligence --AAAI 2017
+>
+> **作者：**Baoxu Shi, Tim Weninger
+>
+> **推荐理由**：本文提出一个名为ProjE的共享变量神经网络模型，该模型不需要复杂特征工程，仅通过简单改变底层模型的结构，来填补知识图谱中的缺失信息。
+>
+>  
+>
+> **6、标题：***[Convolutional 2d knowledge graph embeddings](https://www-beta1.aminer.cn/pub/59ae3be32bbe271c4c71b8ba/convolutional-d-knowledge-graph-embeddings)*
+>
+> **出版物：**the Association for the Advance of Artificial Intelligence --AAAI 2018
+>
+> **作者：**Tim Dettmers, Pasquale Minervini, Pontus Stenetorp, Sebastian Riedel
+>
+> **推荐理由**：本文提出了一种用于链路预测的多层卷积网络模型ConvE，来预测知识图谱中实体间缺失关系。本文方法具有很高的参数效率，特别适用于对具有高密度的节点进行建模。
+>
+>  
+>
+> **7、标题：***[InfoGraph: Unsupervised and Semi-supervised Graph-Level Representation Learning viaMutual Information Maximization](https://www-beta1.aminer.cn/pub/5d4ac1eb3a55acb184527a54/infograph-unsupervised-and-semi-supervised-graph-level-representation-learning-via-mutual-information)*
+>
+> **出版物：**The International Conference on Learning Representations --ICLR 2020
+>
+> **作者：**Fan-Yun Sun, Jordan Hoffmann, Vikas Verma, Jian Tang
+>
+> **推荐理由**：本文受到无监督表示法学习的启发，通过最大化交互信息，提出了InfoGraph*模型，该模型最大化了InfoGraph学习的无监督图表示与现有监督方法学习的表示之间的互信息。
+>
+>  
+>
+> **8、标题：***[Dynamic Graph Representation Learning via Self-Attention Networks](https://www-beta1.aminer.cn/pub/5c5ce50d17c44a400fc38f4d/dynamic-graph-representation-learning-via-self-attention-networks)*
+>
+> **出版物：**Web Search and Data Mining --WSDM 2020
+>
+> **作者：**Aravind Sankar，Yanhong Wu, Liang Gou, Wei Zhang，Hao Yang
+>
+> **推荐理由**：本文提出了动态的自注意力网络（DySAT），这是一种新型的神经架构，它操作在动态图上，并学习节点表示，以捕捉结构特性和时间演化模式。
+>
+>  
+>
+> **9、标题：***[An End-to-End Deep Learning Architecture for Graph Classification](https://www-beta1.aminer.cn/pub/5b1642388fbcbf6e5a9b5488/an-end-to-end-deep-learning-architecture-for-graph-classification)*
+>
+> **出版物：**the Association for the Advance of Artificial Intelligence --AAAI 2018
+>
+> **作者：**Muhan Zhang, Zhicheng Cui, Marion Neumann, Yixin Chen
+>
+> **推荐理由**：本文提出了一种可以接受任意结构的图神经网络架构，包括局部图卷积模型和图顶点排序策略。本文方法解决了图分类任务中的两个问题：1)如何提取有用的特征来表示信息编码丰富的图象；2)如何顺序读取有意义且一致的绘制图形。
+>
+>  
+>
+> **10、标题：***[Hierarchical graph representation learning with differentiable pooling](https://www-beta1.aminer.cn/pub/5b67b4b917c44aac1c867dbc/hierarchical-graph-representation-learning-with-differentiable-pooling)*
+>
+> **出版物：**Neural Information Processing Systems --NeurIPS 2018
+>
+> **作者：**Rex Ying, Jiaxuan You, Christopher Morris, Xiang Ren,William L. Hamilton， Jure Leskovec
+>
+> **推荐理由**：本文提出了一种可微图池化模块DIFFPOOL，可生成层次结构图形的表示形式，并可与各种图形相结合的端到端的神经网络架构。
+>
+> 引自：https://www.aminer.cn/research_report/5eaaaa86ab6e30e67b2c96a3?download=false
