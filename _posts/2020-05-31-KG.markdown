@@ -58,7 +58,7 @@ typora-root-url: ..
 
 从知识图谱构建角度，包括收集数据、知识抽取、知识融合、知识加工和知识应用等。从领域划分包括：括知识表示（knowledge representation）、知识获取（knowledge acquisition）、知识推理（knowledge reasoning）、知识集成（knowledge integration）和知识存储（knowledge storage）等。
 
-![查看源图像](img/in-post/KG/v2-e5e2436e99d5eb32c37cb580bfea1752_1200x500.jpg)
+![查看源图像](img/in-post/KG/1.jpg)
 
 #### 1、收集数据
 
@@ -148,7 +148,7 @@ typora-root-url: ..
 
 （我在行文中埋了个彩蛋你发现了嘛∠( ᐛ 」∠)＿）
 
-![查看源图像](img/in-post/KG/zdVM-fynmzun0511034.jpg)
+![查看源图像](img/in-post/KG/2.jpg)
 
 - [x] 彩蛋：如何确保计算机能够看得”懂“数据？
 
@@ -166,7 +166,7 @@ typora-root-url: ..
 
 （下图：连接主义再次暴打符号主义，欸，我为啥要用再次....）
 
-![image-20200531200909869](img/in-post/KG\image-20200531200909869.png)
+![image-20200531200909869](img/in-post/KG/3.png)
 
 (1)知识表示学习
 
@@ -188,7 +188,7 @@ typora-root-url: ..
 
 ​	b.PTransE 等研究的实验表明，考虑关系路径能够极大提升知识表示学习的区分性，提高在知识图谱补全等任务上的性能。
 
-> ![image-20200531202821193](img/in-post/KG/image-20200531202821193.png)
+> ![image-20200531202821193](img/in-post/KG/4.png)
 >
 > 引自：PinSage论文
 >
