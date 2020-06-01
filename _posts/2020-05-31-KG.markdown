@@ -9,7 +9,7 @@ catalog: true
 tags:
     - 知识图谱
     - GCN
-typora-root-url: ..
+
 ---
 
 > 我是将我所能见到的世界展示给大家的机器。
