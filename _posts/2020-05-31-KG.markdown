@@ -60,8 +60,6 @@ tags:
 
 从知识图谱构建角度，包括收集数据、知识抽取、知识融合、知识加工和知识应用等。从领域划分包括：括知识表示（knowledge representation）、知识获取（knowledge acquisition）、知识推理（knowledge reasoning）、知识集成（knowledge integration）和知识存储（knowledge storage）等。
 
-![img](/img/in-post/post-metro-ui.jpg)
-
 ![查看源图像](/img/in-post/KG/1.jpg)
 
 #### 1、收集数据
