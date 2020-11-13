@@ -55,14 +55,17 @@ def binarySearch(nums, target):
 
 ## LeetCode 相关题目
 
-- [ ] 简单:69. Sqrt(x) 
+- [x] 简单:69. Sqrt(x) 
 - [ ] 简单:744 Find Smallest Letter Greater Than Target
 - [ ] 中等:540 Single Element in a Sorted Array
 - [ ] 简单：278 First Bad Version
 - [ ] 中等：153 Find Minimum in Rotated Sorted Array
 - [ ] 中等：34 Find First and Last Position of Element in Sorted Array
 
-
-
 ## 
 
+
+
+
+
+### X的平方根
