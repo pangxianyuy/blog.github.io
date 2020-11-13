@@ -4,7 +4,7 @@ title:      "LeetCode刷题：二分查找"
 subtitle:   " 二分查找类型题目总结，长期更新"
 date:       2020-11-13 
 author:     "杨小健"
-header-img: "img/in-post/KG/KG-Head.jpg"
+header-img: "img/in-post/LeetCode/OIP.jpg"
 catalog: true
 tags:
     - LeetCode
