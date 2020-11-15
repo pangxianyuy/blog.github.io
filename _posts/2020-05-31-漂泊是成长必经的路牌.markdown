@@ -4,7 +4,7 @@ title:      "漂泊是成长必经的路牌"
 subtitle:   " 长租公寓爆雷的背后，是一个个被吸血的年轻人，还有他们被吸干的梦想。究竟是互联网颠覆了传统行业，还是传统行业借壳互联网呢。 "
 date:       2020-11-14 
 author:     "胖咸鱼y"
-header-img: "img/in-post/impressions/egg-shell-Head.jpg"
+header-img: "img/in-post/impressions/eggshell-Head.jpg"
 catalog: true
 tags:
     - 生活感触
