@@ -1,0 +1,21 @@
+---
+layout:     post
+title:      "知识图谱入门(上)"
+subtitle:   " 经验告诉我，像这种上下集的文章必定是没有下的..... "
+date:       2020-05-31 
+author:     "胖咸鱼y"
+header-img: "img/in-post/KG/KG-Head.jpg"
+catalog: true
+tags:
+    - 知识图谱
+    - GCN
+typora-root-url: ..
+---
+
+ 
+
+> 资源整理
+>
+> 1、知乎上的一个回答，包括书单、论文和代码
+>
+> https://zhuanlan.zhihu.com/p/69384273?utm_source=wechat_session&utm_medium=social&utm_oi=623211095838560256
