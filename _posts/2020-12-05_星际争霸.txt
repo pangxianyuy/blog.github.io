@@ -14,7 +14,4 @@ MARL参考资料：https://github.com/LantaoYu/MARL-Papers
 
 SMAC:http://whirl.cs.ox.ac.uk/blog/smac/
 
-
-smac 是基于pysc2 之上的，更加专注于 微操管理的框架
-
-然后作者还在smac的基础上，利用pyTorch实现了一部分的MARL算法：https://github.com/oxwhirl/pymarl
+星际争霸框架https://github.com/oxwhirl/smac
