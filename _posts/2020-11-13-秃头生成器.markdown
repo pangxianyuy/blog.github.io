@@ -1,14 +1,14 @@
 ---
 layout:     post
 title:      "人脸编辑：秃头生成"
-subtitle:   " 经验告诉我，像这种上下集的文章必定是没有下的..... "
+subtitle:   " 挖坑，待填。。。 "
 date:       2020-05-31 
 author:     "胖咸鱼y"
-header-img: "img/in-post/KG/KG-Head.jpg"
+header-img: "img/in-post/images/2020_12_14.jpg"
 catalog: true
 tags:
-    - 知识图谱
-    - GCN
+    - GAN
+    - 有趣的事情
 typora-root-url: ..
 ---
 
