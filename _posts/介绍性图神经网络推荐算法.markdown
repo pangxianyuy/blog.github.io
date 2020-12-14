@@ -4,7 +4,7 @@ title:      "图神经网络做推荐算法"
 subtitle:   "基础性的入门文章"
 date:       2020-05-31 
 author:     "胖咸鱼y"
-header-img: "img/in-post/KG/KG-Head.jpg"
+header-img: "img/in-post/images/2020_12_14_1.jpg"
 catalog: true
 tags:
     - 推荐算法

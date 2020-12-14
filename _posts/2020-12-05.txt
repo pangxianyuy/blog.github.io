@@ -11,5 +11,12 @@ MARL参考资料：https://github.com/LantaoYu/MARL-Papers
 星际争霸数据集合：https://blog.csdn.net/Uwr44UOuQcNsUQb60zk2/article/details/78333957?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1.not_use_machine_learn_pai&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-1.not_use_machine_learn_pai
 
 星际争霸微操：https://blog.csdn.net/xiaoqianlizhen/article/details/90259752
-
 SMAC:http://whirl.cs.ox.ac.uk/blog/smac/
+
+星际争霸  框架：https://github.com/oxwhirl/smac
+
+一个网易大神的github项目，包括利用smac实现微操、利用pysc2实现bot
+https://github.com/starry-sky6688
+
+星际争霸资料：http://antkillerfarm.github.io/drl/2020/01/06/DRL_8.html
+
