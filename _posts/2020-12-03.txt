@@ -1,7 +1,0 @@
-图计算系统、图计算框架与图数据库
-
-图计算系统：
-
-Tinkerpop
-http://www.imbajin.com/2018-07-26-%E5%9B%BE%E8%AE%A1%E7%AE%97%E5%BC%95%E6%93%8ETinkerpop/
-

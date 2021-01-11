@@ -1,7 +1,0 @@
-http://quarterback.cn/tinkerpop%E4%B8%8Ejanusgraph%E6%A6%82%E8%BF%B0/
-图计算入门系列下
-
-OLAP 与 OLTP
-
-图数据库 与 图计算框架
-
